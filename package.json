@@ -1,0 +1,23 @@
+{
+  "name": "lilynode",
+  "version": "0.1.0",
+  "description": "Node.js wrapper for lilypond",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adius/lilynode.git"
+  },
+  "keywords": [
+    "lilypond"
+  ],
+  "author": {
+    "name": "Adrian Sieber",
+    "email": "mail@adriansieber.com",
+    "url": "http://adriansieber.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adius/lilynode/issues"
+  },
+  "homepage": "https://github.com/adius/lilynode"
+}
