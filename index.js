@@ -18,37 +18,69 @@ module.exports.renderSync = function (lilypondString, options) {
 
 module.exports.renderFile = function (filePath, options, callback) {
 
-	var tempName,
+	var defaults = {
+			format: 'png',
+			resolution: 50 // ppcm
+		},
+		formatMap = {
+			png: '--png',
+			pdf: '--pdf',
+			svg: '-d backend=svg'
+		},
+		isSupportedFormat,
+		tempName,
 		tempFile,
-		shellCommand
+		shellCommand,
+		key
 
+
+	// Set defaults
+	for (key in defaults)
+		if (defaults.hasOwnProperty(key))
+			options[key] = options[key] || defaults[key]
+
+	isSupportedFormat = formatMap[options.format]
+
+	if (!isSupportedFormat){
+		callback(new Error(options.format + ' is no supported export format.'))
+		return
+	}
 
 	tempName = temp.path()
-	tempFile = tempName + '.png'
+	tempFile = tempName + '.' + options.format
 
-	shellCommand = 'lilypond --png --silent ' +
-	               '--output ' + tempName + ' ' +
-	               filePath
 
-	childProcess.exec(shellCommand, function (error, stdout, stderr) {
+	shellCommand = [
+		'lilypond',
+		formatMap[options.format] || '',
+		'-d resolution=' + (options.resolution * 2.54),
+		'--silent',
+		'--output ' + tempName,
+		filePath
+	]
 
-		if (error)
-			callback(error)
+	childProcess.exec(
+		shellCommand.join(' '),
+		function (error, stdout, stderr) {
 
-		fs.readFile(tempFile, {}, function (error, data) {
+			if (error)
+				callback(error)
 
-			error = error || null
+			fs.readFile(tempFile, {}, function (error, data) {
 
-			callback(error, data)
-		})
+				error = error || null
 
-		fs.unlink(tempFile, function (error) {
-			if (error && error.code !== 'ENOENT') throw error
-		})
-		fs.unlink(tempName + '.midi', function (error) {
-			if (error && error.code !== 'ENOENT') throw error
-		})
-	})
+				callback(error, data)
+			})
+
+			fs.unlink(tempFile, function (error) {
+				if (error && error.code !== 'ENOENT') throw error
+			})
+			fs.unlink(tempName + '.midi', function (error) {
+				if (error && error.code !== 'ENOENT') throw error
+			})
+		}
+	)
 }
 
 module.exports.renderFileSync = function (filePath, options) {
