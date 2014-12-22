@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/adius/lilynode/issues"
   },
-  "homepage": "https://github.com/adius/lilynode"
+  "homepage": "https://github.com/adius/lilynode",
+  "dependencies": {
+    "temp": "^0.8.1"
+  }
 }
