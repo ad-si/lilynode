@@ -41,7 +41,7 @@ module.exports.renderFile = function (filePath, options, callback) {
 
 	isSupportedFormat = formatMap[options.format]
 
-	if (!isSupportedFormat){
+	if (!isSupportedFormat) {
 		callback(new Error(options.format + ' is no supported export format.'))
 		return
 	}
@@ -54,6 +54,7 @@ module.exports.renderFile = function (filePath, options, callback) {
 		'lilypond',
 		formatMap[options.format] || '',
 		'-d resolution=' + (options.resolution * 2.54),
+		'-d no-point-and-click',
 		'--silent',
 		'--output ' + tempName,
 		filePath
@@ -63,21 +64,29 @@ module.exports.renderFile = function (filePath, options, callback) {
 		shellCommand.join(' '),
 		function (error, stdout, stderr) {
 
-			if (error)
+			if (error) {
 				callback(error)
+				return
+			}
 
 			fs.readFile(tempFile, {}, function (error, data) {
 
-				error = error || null
+				if (error) {
+					callback(error)
+					return
+				}
+				else
+					callback(null, data)
 
-				callback(error, data)
-			})
 
-			fs.unlink(tempFile, function (error) {
-				if (error && error.code !== 'ENOENT') throw error
-			})
-			fs.unlink(tempName + '.midi', function (error) {
-				if (error && error.code !== 'ENOENT') throw error
+				fs.unlink(tempFile, function (error) {
+					if (error && error.code !== 'ENOENT')
+						throw error
+				})
+				fs.unlink(tempName + '.midi', function (error) {
+					if (error && error.code !== 'ENOENT')
+						throw error
+				})
 			})
 		}
 	)
