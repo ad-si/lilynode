@@ -74,7 +74,7 @@ module.exports.renderFile = function (filePath, options, callback) {
 				return
 			}
 
-			fs.readFile(tempFile, {encoding: 'binary'}, function (error, data) {
+			fs.readFile(tempFile, {}, function (error, data) {
 
 				if (error) {
 					callback(error)
