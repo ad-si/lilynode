@@ -36,13 +36,20 @@ Options object to configure the rendering
 
 ##### Available properties
 
-`format`: File format of output file
-Type: String
-Possible values: png, svg, pdf
+`format`: File format of output file  
+Type: String  
+Possible values:
+
+- midi
+- pdf
+- ps
+- png
+- svg
+
 Default value: png
 
-`resolution`: Resolution of output in ppcm (only available for png format)
-Type: Number
+`resolution`: Resolution of output in ppcm (only available for png format)  
+Type: Number  
 Default value: 50
 
 
