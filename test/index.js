@@ -56,6 +56,14 @@ function renderFile (options) {
 }
 
 
-tests.forEach(function (options) {
-	renderFile(options)
+fs.mkdir(path.join(__dirname, 'build'), function (error) {
+
+	if (error && error.code !== 'EEXIST')
+		throw error
+
+	tests.forEach(function (options) {
+		renderFile(options)
+	})
 })
+
+
