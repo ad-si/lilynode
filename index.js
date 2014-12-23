@@ -23,8 +23,10 @@ module.exports.renderFile = function (filePath, options, callback) {
 			resolution: 50 // ppcm
 		},
 		formatMap = {
-			png: '--png',
+			midi: '',
 			pdf: '--pdf',
+			png: '--png',
+			ps: '--ps',
 			svg: '-d backend=svg'
 		},
 		isSupportedFormat,
@@ -39,7 +41,10 @@ module.exports.renderFile = function (filePath, options, callback) {
 		if (defaults.hasOwnProperty(key))
 			options[key] = options[key] || defaults[key]
 
-	isSupportedFormat = formatMap[options.format]
+	isSupportedFormat = Boolean(
+		(typeof formatMap[options.format] !== 'undefined') &&
+		(formatMap[options.format] !== null)
+	)
 
 	if (!isSupportedFormat) {
 		callback(new Error(options.format + ' is no supported export format.'))
@@ -69,7 +74,7 @@ module.exports.renderFile = function (filePath, options, callback) {
 				return
 			}
 
-			fs.readFile(tempFile, {}, function (error, data) {
+			fs.readFile(tempFile, {encoding: 'binary'}, function (error, data) {
 
 				if (error) {
 					callback(error)
@@ -79,13 +84,20 @@ module.exports.renderFile = function (filePath, options, callback) {
 					callback(null, data)
 
 
-				fs.unlink(tempFile, function (error) {
-					if (error && error.code !== 'ENOENT')
-						throw error
-				})
-				fs.unlink(tempName + '.midi', function (error) {
-					if (error && error.code !== 'ENOENT')
-						throw error
+				var formatsToDelete = [options.format]
+
+				if (options.format === 'midi')
+					formatsToDelete.push('ps')
+
+				if (formatsToDelete.indexOf('midi') === -1)
+					formatsToDelete.push('midi')
+
+
+				formatsToDelete.forEach(function (format) {
+					fs.unlink(tempName + '.' + format, function (error) {
+						if (error && error.code !== 'ENOENT')
+							throw error
+					})
 				})
 			})
 		}
