@@ -22,5 +22,8 @@
   "homepage": "https://github.com/adius/lilynode",
   "dependencies": {
     "temp": "^0.8.1"
+  },
+  "scripts": {
+      "test": "node ./test/index.js"
   }
 }

@@ -42,7 +42,11 @@ function renderFile (options) {
 				console.log('Rendered ' + options.name)
 
 				fs.writeFileSync(
-					'build/' + options.name + '.' + options.format,
+					path.join(
+						__dirname,
+						'build',
+						(options.name + '.' + options.format)
+					),
 					output,
 					{encoding: 'binary'}
 				)
