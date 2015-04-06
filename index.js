@@ -20,7 +20,8 @@ module.exports.renderFile = function (filePath, options, callback) {
 
 	var defaults = {
 			format: 'png',
-			resolution: 50 // ppcm
+			resolution: 50 // ppcm,
+			binaryPath: 'lilypond'
 		},
 		formatMap = {
 			midi: '',
@@ -56,7 +57,7 @@ module.exports.renderFile = function (filePath, options, callback) {
 
 
 	shellCommand = [
-		'lilypond',
+		binaryPath,
 		formatMap[options.format] || '',
 		'-d resolution=' + (options.resolution * 2.54),
 		'-d no-point-and-click',
