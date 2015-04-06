@@ -52,6 +52,10 @@ Default value: png
 Type: Number  
 Default value: 50
 
+`binaryPath`: Path to lilypond binary  
+Type: String  
+Default value: lilypond  
+
 
 #### callback
 
