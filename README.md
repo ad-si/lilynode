@@ -1,63 +1,46 @@
 # LilyNode
 
+LilyNode is a Node.js wrapper for [LilyPond](https://lilypond.org/).
+
+
 ## Installation
 
-```
-$ npm install lilynode
+```sh
+npm install lilynode
 ```
 
 
 ## Usage
 
-### Require
+```js
+import { renderFile } from "lilynode"
 
-Require LilyNode in your programs:
+const pdf = await renderFile(
+  filePath, // Path to LilyPond file
+  options,  // Options object to configure the rendering
+)
 
+// or
+
+const pdf = await render(
+  "…", // Content of a LilyPond file
+  options,
+)
 ```
-var lilynode = require('lilynode')
-```
 
 
-### Interface
+### Available Options
 
-```
-lilynode.renderFile(filePath, options, callback)
-```
+`format: "midi" | "pdf" | "ps" | "png" | "svg"` - File format of output file \
+Default value: `png`
 
+`resolution: number` - Resolution of output in ppcm (only available for PNGs) \
+Default value: `50`
 
-#### filePath
-
-Path to LilyPond file to get rendered
-
-
-#### options
-
-Options object to configure the rendering
-
-##### Available properties
-
-`format`: File format of output file  
-Type: String  
-Possible values:
-
-- midi
-- pdf
-- ps
-- png
-- svg
-
-Default value: png
-
-`resolution`: Resolution of output in ppcm (only available for png format)  
-Type: Number  
-Default value: 50
-
-`binaryPath`: Path to lilypond binary  
-Type: String  
-Default value: lilypond  
+`binaryPath: string` - Path to lilypond binary \
+Default value: `lilypond`
 
 
-#### callback
+## Development
 
-Callback is a function which gets the two arguments `error` and `output` passed.
-`output` is a buffer containing the rendered file which can then for example be saved to a file.
+Check out the [makefile](./makefile) for all available commands.

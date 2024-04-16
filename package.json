@@ -1,11 +1,12 @@
 {
   "name": "lilynode",
   "version": "0.4.1",
-  "description": "Node.js wrapper for lilypond",
+  "description": "Node.js wrapper for LilyPond",
   "main": "index.js",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/adius/lilynode.git"
+    "url": "https://github.com/ad-si/lilynode.git"
   },
   "keywords": [
     "lilypond"
@@ -15,15 +16,21 @@
     "email": "mail@adriansieber.com",
     "url": "http://adriansieber.com"
   },
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adius/lilynode/issues"
+    "url": "https://github.com/ad-si/lilynode/issues"
   },
-  "homepage": "https://github.com/adius/lilynode",
-  "dependencies": {
-    "temp": "^0.8.1"
-  },
+  "homepage": "https://github.com/ad-si/lilynode",
   "scripts": {
-    "test": "node ./test/index.js"
+    "prepublishOnly": "tsc",
+    "test": "bun run ./tests/main.ts"
+  },
+  "dependencies": {
+    "temp": "^0.9.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/temp": "^0.9.4",
+    "typescript": "^5.4.5"
   }
 }
