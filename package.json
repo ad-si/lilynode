@@ -1,6 +1,6 @@
 {
   "name": "lilynode",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Node.js wrapper for LilyPond",
   "main": "index.js",
   "type": "module",
