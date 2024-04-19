@@ -13,18 +13,21 @@ npm install lilynode
 ## Usage
 
 ```js
+import fs from "fs/promises"
 import { renderFile } from "lilynode"
 
 const pdf = await renderFile(
   filePath, // Path to LilyPond file
-  options,  // Options object to configure the rendering
+  { format: "pdf" },  // Options object to configure the rendering
 )
+
+await fs.writeFile("./test.pdf", pdf, { encoding: "binary" })
 
 // or
 
 const pdf = await render(
-  "…", // Content of a LilyPond file
-  options,
+  "\\score { …", // Content of a LilyPond file
+  { format: "pdf" },
 )
 ```
 
