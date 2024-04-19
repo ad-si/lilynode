@@ -4,12 +4,19 @@
   "description": "Node.js wrapper for LilyPond",
   "main": "index.js",
   "type": "module",
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ad-si/lilynode.git"
   },
   "keywords": [
-    "lilypond"
+    "lilypond",
+    "midi",
+    "music-notation",
+    "music",
+    "sheet-music"
   ],
   "author": {
     "name": "Adrian Sieber",
